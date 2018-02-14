@@ -12,12 +12,12 @@ import UIKit
 class PlayingCardView: UIView {
 
     @IBInspectable
-    var rank: Int = 1 {
+    var rank: Int = 11 {
         // When rank changes we have to redraw. setNeedsDisplay() call draw() method
         didSet { setNeedsDisplay(); setNeedsLayout() }
     }
     @IBInspectable
-    var suit: String = "♦" { didSet { setNeedsDisplay(); setNeedsLayout() } }
+    var suit: String = "♣" { didSet { setNeedsDisplay(); setNeedsLayout() } }
     @IBInspectable
     var isFaceUp: Bool = true { didSet { setNeedsDisplay(); setNeedsLayout() } }
     
@@ -27,6 +27,10 @@ class PlayingCardView: UIView {
     
     private lazy var upperLeftCornerLabel = createCornerLabel()
     private lazy var lowerRightCornerLabel = createCornerLabel()
+    
+    var faceCardScale: CGFloat = SizeRatio.faceCardImageSizeToBoundsSize {
+        didSet { setNeedsDisplay() }
+    }
     
     private func centeredAttributedString(_ string: String, fontSize: CGFloat) -> NSAttributedString {
         let paragraphStyle = NSMutableParagraphStyle()
@@ -63,6 +67,16 @@ class PlayingCardView: UIView {
         label.isHidden = !isFaceUp
     }
     
+    @objc func adjustFaceCardScale(byHandlingGestureRecognizedBy recognizer: UIPinchGestureRecognizer) {
+        switch recognizer.state {
+        case .changed, .ended:
+            faceCardScale *= recognizer.scale
+            recognizer.scale = 1.0
+        default:
+            break
+        }
+    }
+    
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
     override func draw(_ rect: CGRect) {
@@ -75,7 +89,7 @@ class PlayingCardView: UIView {
             if let faceCardImage = UIImage(named: rankString+suit) {
                 print("image")
                 // 75% of the size ratio
-                faceCardImage.draw(in: bounds.zoom(by: SizeRatio.faceCardImageSizeToBoundsSize))
+                faceCardImage.draw(in: bounds.zoom(by: faceCardScale))
             }
             else {
                 drawPips()

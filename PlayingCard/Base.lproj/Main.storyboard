@@ -22,15 +22,19 @@
                             <view opaque="NO" contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="4Jg-Rx-J8G" customClass="PlayingCardView" customModule="PlayingCard" customModuleProvider="target">
                                 <rect key="frame" x="16" y="136.66666666666669" width="343" height="548.66666666666652"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="4Jg-Rx-J8G" secondAttribute="height" multiplier="5:8" id="4Uu-2E-Ijw"/>
                                     <constraint firstAttribute="width" priority="750" constant="800" id="sS7-94-i90"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="rank">
-                                        <integer key="value" value="2"/>
+                                        <integer key="value" value="8"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="6jG-z6-XJX" appends="YES" id="wgd-DI-WYQ"/>
+                                </connections>
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="0.94258779290000005" green="0.72952412629999996" blue="0.45067368600000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -45,8 +49,16 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="playingCardView" destination="4Jg-Rx-J8G" id="gWC-vT-AZc"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="6jG-z6-XJX">
+                    <connections>
+                        <action selector="flipCard:" destination="BYZ-38-t0r" id="K7c-QL-MdQ"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="136.80000000000001" y="97.536945812807886"/>
         </scene>
